@@ -1,55 +1,57 @@
+const fs = require("fs");
 const { EOL } = require("os");
 
 function read(nameFile) {
-	const text = fs.readFileSync(`${__dirname}/${nameFile}`, "utf-8");
-	const string = text.trim().split(EOL);
-	const mainarr = [];
-	for (elem of string) {
-		for (let i = 0; i < elem.length; i += 9) {
-			mainarr.push(elem.slice(i, i + 9));
-		}
-	}
+  const text = fs.readFileSync(`${__dirname}/${nameFile}`, "utf-8");
+  const string = text.trim().split(EOL);
+  const mainarr = [];
+  for (let elem of string) {
+    for (let i = 0; i < elem.length; i += 9) {
+      mainarr.push(elem.slice(i, i + 9)); // по 9 элементов ряду
+    }
+  }
+  //console.log(mainarr);
+  const arrstr = [];
+  for (let i = 0; i < mainarr.length; i += 9) {
+    arrstr.push(mainarr.slice(i, i + 9));
+  }
 
-	const arrstr = [];
-	for (let i = 0; i < mainarr; i += 9) {
-		string.push(mainarr.slice(i, (i += 9)));
-	}
-
-
-	for (let i = 0; i < arrstr.length; i++) {
-		for (let j = 0; j < arrstr[i].length; j++) {
-			arrstr[i][j] = arrstr[i][j].split("");
-		}
-	}
-	return arrstr;
+  for (let i = 0; i < arrstr.length; i++) {
+    for (let j = 0; j < arrstr[i].length; j++) {
+      arrstr[i][j] = arrstr[i][j].split("");
+    }
+  }
+  //console.log(arrstr);
+  return arrstr;
+}
+// const readFile = read("puzzles.txt");
+// console.log(readFile);
+//----------------------------------------------------------------------------------------
+function solve(arr, fildSudoku) {
+  const field = arr[fildSudoku];
+  return field;
 }
 
-/**
- * Прочесть файл puzzles.txt в кодировке 'utf-8' и вернуть эти данные из функции
- */
+//----------------------------------------------------------------------------------------
 
-function solve() {
-	/**
-	 * Принимает игровое поле в том формате, в котором его вернули из функции read.
-	 * Возвращает игровое поле после попытки его решить.
-	 */
+function posValues(arr, x, y) {
+  const elements = [];
+  for (let el of arr[x]) {
+    if (el === "-") continue;
+    elements.push(el);
+  }
+  console.log(elements);
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i][y] === "-") continue;
+    elements.push(arr[i][y]);
+  }
+  const posVal = [];
+  for (let i = 1; i < 10; i++) {
+    if (elements.includes(`${i}`)) continue;
+    posVal.push(`${i}`);
+  }
+  //console.log(posVal);
+  return posVal;
 }
 
-function isSolved() {
-	/**
-	 * Принимает игровое поле в том формате, в котором его вернули из функции solve.
-	 * Возвращает булевое значение — решено это игровое поле или нет.
-	 */
-}
-
-function prettyBoard() {
-
-	/**
-	 * Принимает игровое поле в том формате, в котором его вернули из функции solve.
-	 * Выводит в консоль/терминал судоку.
-	 * Подумай, как симпатичнее его вывести.
-	 */
-
-
-}
-
+console.table(solve(read("puzzles.txt"), 0));
