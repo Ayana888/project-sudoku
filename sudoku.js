@@ -27,11 +27,12 @@ function read(nameFile) {
       allFields[i][j] = allFields[i][j].split("");
     }
   }
-  // console.log(allFields);
-  return allFields;
+  //console.log(allFields);
+  return allFields; // разбивает каждое судоку по блокам
 }
 
 function solve(arr, numFild) {
+  // ф-я смены поля
   const Field = arr[numFild];
   return Field;
 }
@@ -55,19 +56,18 @@ function posValues(arr, x, y) {
     if (el === "-") continue;
     elements.push(el);
   }
-  // console.log(elements, 1111);
-  for (let i = 7; i < arr.length; i++) {
+  // console.log(elements, 1111);   // каждый элемент пушим, который есть в массиве
+  for (let i = 0; i < arr.length; i++) {
     if (arr[i][y] === "-") continue;
     elements.push(arr[i][y]);
   }
   const posVal = [];
   for (let i = 0; i < 10; i++) {
     if (elements.includes(`${i}`)) continue;
-    posVal.push(`${i}`);
+    posVal.push(`${i}`); // вставить числа, которых нет
   }
   //console.log(posVal);
   return posVal;
 }
 
-console.table(searchEl(solve(read("puzzles.txt"), 0)));
-
+console.table(searchEl(solve(read("puzzles.txt"), 14)));
